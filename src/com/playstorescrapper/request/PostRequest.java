@@ -1,4 +1,4 @@
-package com.playstorescrapper.ajax;
+package com.playstorescrapper.request;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
