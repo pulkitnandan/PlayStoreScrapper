@@ -4,12 +4,13 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
+
 
 public class PostRequest {
 
@@ -49,8 +50,9 @@ public class PostRequest {
 		connection.setDoOutput(true);
 	}
 
-	public void storeResponse() throws Exception {
+	public ArrayList<String> jsonResponse() throws Exception {
 
+		ArrayList<String> jsonResponses = new ArrayList<String>();
 		String referer = "https://play.google.com/store/apps/details?id="
 				+ APP_ID;
 
@@ -90,25 +92,29 @@ public class PostRequest {
 
 			if (con.getContentEncoding().indexOf("gzip") != -1) {
 				System.out.println("This is gzipped content  ");
-				StringWriter responseBody = new StringWriter();
 				GZIPInputStream zippedInputStream = new GZIPInputStream(
 						con.getInputStream());
 				BufferedReader r = new BufferedReader(new InputStreamReader(
 						zippedInputStream));
 				String line = null;
+				String jsonString = "";
+				int i = 0;
 				while ((line = r.readLine()) != null) {
-					responseWriter.println(line);
+					if(i == 2 || i == 3){
+						jsonString += line;
+					}
+					i++;
 				}
-				System.out.println(responseBody.toString());
-				responseBody.close();
+				System.out.println(jsonString);
+				jsonResponses.add(jsonString);
 				zippedInputStream.close();
-
 			}
 			pageNum++;
 			wr.close();
 		}
 
 		responseWriter.close();
+		return jsonResponses;
 
 	}
 

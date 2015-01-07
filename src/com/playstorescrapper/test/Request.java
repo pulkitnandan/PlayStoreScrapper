@@ -1,5 +1,8 @@
 package com.playstorescrapper.test;
 
+import java.util.ArrayList;
+
+import com.playstorescrapper.parser.JsonParser;
 import com.playstorescrapper.request.*;
 
 public class Request {
@@ -14,8 +17,10 @@ public class Request {
 		
 		PostRequest simCity = new PostRequest(appPackageId, cookie);
 		
-		try {
-			simCity.storeResponse();
+		try {			
+			ArrayList<String> jsonReviews = simCity.jsonResponse();
+			JsonParser jsonParse = new JsonParser(jsonReviews);
+			ArrayList<String> htmlReviews = jsonParse.parseJsonToHtml();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
