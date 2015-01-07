@@ -21,7 +21,7 @@ public class PostRequest {
 	
 	private void sendPost() throws Exception {
 		 
-		String url = "https://play.google.com/store/apps/details?id=com.ea.game.simcitymobile_row";
+		String url = "https://play.google.com/store/getreviews";
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
  
@@ -41,7 +41,7 @@ public class PostRequest {
 		con.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36");
 		con.setRequestProperty("x-client-data", "CJW2yQEIpbbJAQiptskBCMS2yQEInobKAQjuiMoBCMWUygE=");
  
-		String urlParameters = "reviewType=0&pageNum=3&id=com.ea.game.simcitymobile_row&reviewSortOrder=4&xhr=1&token=DA4mCNuRpGCuuJfXCDHrRcqDw2Y%3A1420428587710";
+		String urlParameters = "reviewType=0&pageNum=1&id=com.ea.game.simcitymobile_row&reviewSortOrder=4&xhr=1&token=DA4mCNuRpGCuuJfXCDHrRcqDw2Y%3A1420428587710";
  
 		// Send post request
 		con.setDoOutput(true);
