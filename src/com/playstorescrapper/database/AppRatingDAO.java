@@ -20,7 +20,8 @@ public class AppRatingDAO {
 
 		// preparedStatements can use variables and are more efficient
 		preparedStatement = dC.getConnection().prepareStatement(
-				"insert into "+ app.getName() + " values (?,?, ?, ?, ?, ?, ? )");
+				"insert into " + app.getName()
+						+ " values (?,?, ?, ?, ?, ?, ? )");
 
 		preparedStatement.setString(1, app.getName());
 		preparedStatement.setString(2, app.getPackageId());
@@ -34,13 +35,9 @@ public class AppRatingDAO {
 		// Insert ScreenShot urls;
 		int screenShotId = 0;
 		for (String screenShotUrl : app.getScreenShots()) {
-			String insertSql = "insert into "
-					+ app.getName()
-					+ "_screenshots values ( "
-					+  (screenShotId++)
-					+ " , ' "
-					+ screenShotUrl
-					+ " ' )";
+			String insertSql = "insert into " + app.getName()
+					+ "_screenshots values ( " + (screenShotId++) + " , ' "
+					+ screenShotUrl + " ' )";
 			statement.addBatch(insertSql);
 		}
 		statement.executeBatch();
@@ -61,20 +58,11 @@ public class AppRatingDAO {
 		statement = dC.getConnection().createStatement();
 		int ratingId = 0;
 		for (Review review : reviews) {
-			String insertSql = "insert into " 
-					+ appName
-					+ "_reviews"
-					+ " values ( "
-					+ ratingId++
-					+ " , " 
-					+ review.getRating()
-					+ " , ' "
-					+ review.getReviewComment()
-					+ " ' , ' "
-					+ review.getReviewer()
-					+ " ' , ' " 
-					+ review.getGooglePlusId() 
-					+ " ' )";
+			String insertSql = "insert into " + appName + "_reviews"
+					+ " values ( " + ratingId++ + " , " + review.getRating()
+					+ " , ' " + review.getReviewComment() + " ' , ' "
+					+ review.getReviewer() + " ' , ' "
+					+ review.getGooglePlusId() + " ' )";
 			statement.addBatch(insertSql);
 		}
 		statement.executeBatch();
@@ -88,8 +76,9 @@ public class AppRatingDAO {
 
 	public AppRatingDAO(String name) {
 		DatabaseConnection dC = new DatabaseConnection();
-		if(dC.createTables(name));
-			System.out.println("Tables created successfully");
+		if (dC.createTables(name))
+			;
+		System.out.println("Tables created successfully");
 	}
 
 }

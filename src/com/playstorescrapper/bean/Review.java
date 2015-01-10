@@ -2,16 +2,16 @@ package com.playstorescrapper.bean;
 
 public class Review {
 
-	private double rating;
+	private int rating;
 	private String reviewComment;
 	private String reviewer;
 	private String googlePlusId;
 
-	public double getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(double d) {
+	public void setRating(int d) {
 		this.rating = d;
 	}
 

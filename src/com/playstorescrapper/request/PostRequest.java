@@ -6,11 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
 
 import javax.net.ssl.HttpsURLConnection;
-
 
 public class PostRequest {
 
@@ -50,71 +48,66 @@ public class PostRequest {
 		connection.setDoOutput(true);
 	}
 
-	public ArrayList<String> jsonResponse() throws Exception {
+	public String jsonResponse(int pageNumber) throws Exception {
 
-		ArrayList<String> jsonResponses = new ArrayList<String>();
+		String jsonString = "";
 		String referer = "https://play.google.com/store/apps/details?id="
 				+ APP_ID;
 
 		URL obj = new URL(URL);
 
 		int responseCode = 200;
-		int pageNum = 0;
-
 		PrintWriter responseWriter = new PrintWriter("REVIEWS" + APP_ID
 				+ ".JSON");
 		responseWriter.println("");
 
-		while (responseCode == 200) {
+		// while (responseCode == 200) {
 
-			HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-			setupConnectionDefaults(con);
+		setupConnectionDefaults(con);
 
-			con.setRequestProperty("cookie", COOKIE);
-			con.setRequestProperty("referer", referer);
+		con.setRequestProperty("cookie", COOKIE);
+		con.setRequestProperty("referer", referer);
 
-			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-			String urlParameters = "reviewType=0&pageNum="
-					+ pageNum
-					+ "&id="
-					+ APP_ID
-					+ "&reviewSortOrder=4&xhr=1&token=DA4mCNuRpGCuuJfXCDHrRcqDw2Y%3A1420428587710";
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		String urlParameters = "reviewType=0&pageNum="
+				+ pageNumber
+				+ "&id="
+				+ APP_ID
+				+ "&reviewSortOrder=4&xhr=1&token=DA4mCNuRpGCuuJfXCDHrRcqDw2Y%3A1420428587710";
 
-			wr.writeBytes(urlParameters);
-			wr.flush();
-			wr.close();
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
 
-			responseCode = con.getResponseCode();
-			System.out.println("\nSending 'POST' request to URL : " + URL);
-			System.out.println("Post parameters : " + urlParameters);
-			System.out.println("Response Code : " + responseCode);
+		responseCode = con.getResponseCode();
+		System.out.println("\nSending 'POST' request to URL : " + URL);
+		System.out.println("Post parameters : " + urlParameters);
+		System.out.println("Response Code : " + responseCode);
 
-			if (con.getContentEncoding().indexOf("gzip") != -1) {
-				System.out.println("This is gzipped content  ");
-				GZIPInputStream zippedInputStream = new GZIPInputStream(
-						con.getInputStream());
-				BufferedReader r = new BufferedReader(new InputStreamReader(
-						zippedInputStream));
-				String line = null;
-				String jsonString = "";
-				int i = 0;
-				while ((line = r.readLine()) != null) {
-					if(i == 2 || i == 3){
-						jsonString += line;
-					}
-					i++;
+		if (con.getContentEncoding().indexOf("gzip") != -1) {
+			System.out.println("This is gzipped content  ");
+			GZIPInputStream zippedInputStream = new GZIPInputStream(
+					con.getInputStream());
+			BufferedReader r = new BufferedReader(new InputStreamReader(
+					zippedInputStream));
+			String line = null;
+			jsonString = "";
+			int i = 0;
+			while ((line = r.readLine()) != null) {
+				if (i == 2 || i == 3) {
+					jsonString += line;
 				}
-				System.out.println(jsonString);
-				jsonResponses.add(jsonString);
-				zippedInputStream.close();
+				i++;
 			}
-			pageNum++;
+			System.out.println(jsonString);
+			zippedInputStream.close();
 			wr.close();
 		}
 
 		responseWriter.close();
-		return jsonResponses;
+		return jsonString;
 
 	}
 

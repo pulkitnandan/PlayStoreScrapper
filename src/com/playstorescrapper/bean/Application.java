@@ -12,8 +12,6 @@ public class Application {
 	private Double overAllRatings;
 	private String numberOfDownloads;
 	private String numberOfRaters;
-	
-	
 
 	public String getDescription() {
 		return Description;

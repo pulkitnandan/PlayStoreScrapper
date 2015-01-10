@@ -37,13 +37,12 @@ public class DatabaseConnection {
 
 	}
 
-	
-	//Doesn't works for Oracle DB
+	// Doesn't works for Oracle DB
 	public Boolean createDatabase(String appId) {
 		Statement stmt = null;
 		try {
 			Connection con = this.getConnection();
-			if(con != null)
+			if (con != null)
 				stmt = con.createStatement();
 			String sql = "CREATE DATABASE " + appId + " ;";
 			stmt.executeUpdate(sql);
@@ -51,51 +50,40 @@ public class DatabaseConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		} finally{
+		} finally {
 			this.shutdown();
 		}
 		System.out.println("Database created successfully...");
 		return false;
 	}
-	
+
 	public Boolean createTables(String appName) {
 		try {
-		Connection conn = this.getConnection();
-		Statement stmt = null;
-		stmt = conn.createStatement();
+			Connection conn = this.getConnection();
+			Statement stmt = null;
+			stmt = conn.createStatement();
 
-		String createSql = "CREATE TABLE  " 
-				+ appName
-				+ " (name VARCHAR(30), "
-				+ " packageId VARCHAR(30), "
-				+ " category VARCHAR(30), "
-				+ " description VARCHAR(255), "
-				+ " overAllRatings DECIMAL(2,1), "
-				+ " numberOfDownloads VARCHAR(60), "
-				+ " numberOfRaters VARCHAR(30)"
-				+ " )";
-		stmt.executeUpdate(createSql);
-		createSql = "CREATE TABLE  " 
-				+ appName
-				+ "_screenshots"
-				+ " (screeShotId INTEGER not NULL, "
-				+ " screenShotUrl VARCHAR(255)"
-				+ " )";
-		stmt.executeUpdate(createSql);
-		createSql = "CREATE TABLE  "
-				+ appName
-				+ "_reviews"
-				+ " (reviewId INTEGER not NULL, "
-				+ " ratings DECIMAL(2,1), "
-				+ " reviewComment VARCHAR(255), "
-				+ " reviewer VARCHAR(25), "
-				+ " googlePlusId VARCHAR(30))";
-		stmt.executeUpdate(createSql);
+			String createSql = "CREATE TABLE  " + appName
+					+ " (name VARCHAR(30), " + " packageId VARCHAR(30), "
+					+ " category VARCHAR(30), " + " description VARCHAR(255), "
+					+ " overAllRatings DECIMAL(2,1), "
+					+ " numberOfDownloads VARCHAR(60), "
+					+ " numberOfRaters VARCHAR(30)" + " )";
+			stmt.executeUpdate(createSql);
+			createSql = "CREATE TABLE  " + appName + "_screenshots"
+					+ " (screeShotId INTEGER not NULL, "
+					+ " screenShotUrl VARCHAR(255)" + " )";
+			stmt.executeUpdate(createSql);
+			createSql = "CREATE TABLE  " + appName + "_reviews"
+					+ " (reviewId INTEGER not NULL, " + " ratings INTEGER, "
+					+ " reviewComment VARCHAR(255), "
+					+ " reviewer VARCHAR(25), " + " googlePlusId VARCHAR(30))";
+			stmt.executeUpdate(createSql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
-		} finally{
+		} finally {
 			this.shutdown();
 		}
 		return true;
