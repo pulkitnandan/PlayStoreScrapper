@@ -69,9 +69,10 @@ public class DatabaseConnection {
 				+ " (name VARCHAR(30), "
 				+ " packageId VARCHAR(30), "
 				+ " category VARCHAR(30), "
+				+ " description VARCHAR(255), "
 				+ " overAllRatings DECIMAL(2,1), "
-				+ " numberOfDownloads INTEGER, "
-				+ " numberOfRaters INTEGER"
+				+ " numberOfDownloads VARCHAR(60), "
+				+ " numberOfRaters VARCHAR(30)"
 				+ " )";
 		stmt.executeUpdate(createSql);
 		createSql = "CREATE TABLE  " 

@@ -20,9 +20,10 @@ public class Database {
 		
 		Application testApp = new Application();
 		testApp.setCategory("testCategory");
-		testApp.setName("appNames17");
-		testApp.setNumberOfDownloads(56628);
-		testApp.setNumberOfRaters(87234);
+		testApp.setDescription("Lorem Ipsum Vodum Codum Ndem");
+		testApp.setName("appNames21");
+		testApp.setNumberOfDownloads("56628");
+		testApp.setNumberOfRaters("87,866");
 		testApp.setOverAllRatings(5.4);
 		testApp.setPackageId("com.playstore.packageid");
 		testApp.setScreenShots(createTestScreenShots());

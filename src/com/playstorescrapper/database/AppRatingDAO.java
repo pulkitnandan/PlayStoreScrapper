@@ -20,14 +20,15 @@ public class AppRatingDAO {
 
 		// preparedStatements can use variables and are more efficient
 		preparedStatement = dC.getConnection().prepareStatement(
-				"insert into "+ app.getName() + " values (?,?, ?, ?, ?, ? )");
+				"insert into "+ app.getName() + " values (?,?, ?, ?, ?, ?, ? )");
 
 		preparedStatement.setString(1, app.getName());
 		preparedStatement.setString(2, app.getPackageId());
 		preparedStatement.setString(3, app.getCategory());
-		preparedStatement.setFloat(4, app.getOverAllRatings().floatValue());
-		preparedStatement.setInt(5, app.getNumberOfDownloads());
-		preparedStatement.setInt(6, app.getNumberOfRaters());
+		preparedStatement.setString(4, app.getDescription());
+		preparedStatement.setFloat(5, app.getOverAllRatings().floatValue());
+		preparedStatement.setString(6, app.getNumberOfDownloads());
+		preparedStatement.setString(7, app.getNumberOfRaters());
 		preparedStatement.executeUpdate();
 
 		// Insert ScreenShot urls;

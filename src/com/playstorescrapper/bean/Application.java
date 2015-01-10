@@ -7,10 +7,21 @@ public class Application {
 	private String name;
 	private String packageId;
 	private String category;
+	private String Description;
 	private ArrayList<String> screenShots;
 	private Double overAllRatings;
-	private int numberOfDownloads;
-	private int numberOfRaters;
+	private String numberOfDownloads;
+	private String numberOfRaters;
+	
+	
+
+	public String getDescription() {
+		return Description;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
 
 	public String getName() {
 		return name;
@@ -52,19 +63,19 @@ public class Application {
 		this.overAllRatings = overAllRatings;
 	}
 
-	public int getNumberOfDownloads() {
+	public String getNumberOfDownloads() {
 		return numberOfDownloads;
 	}
 
-	public void setNumberOfDownloads(int numberOfDownloads) {
+	public void setNumberOfDownloads(String numberOfDownloads) {
 		this.numberOfDownloads = numberOfDownloads;
 	}
 
-	public int getNumberOfRaters() {
+	public String getNumberOfRaters() {
 		return numberOfRaters;
 	}
 
-	public void setNumberOfRaters(int numberOfRaters) {
+	public void setNumberOfRaters(String numberOfRaters) {
 		this.numberOfRaters = numberOfRaters;
 	}
 
