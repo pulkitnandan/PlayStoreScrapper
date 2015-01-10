@@ -1,4 +1,4 @@
-package com.playstorescrapper.content;
+package com.playstorescrapper.bean;
 
 import java.util.ArrayList;
 

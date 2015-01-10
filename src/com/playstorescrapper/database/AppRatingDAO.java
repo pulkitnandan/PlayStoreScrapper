@@ -1,74 +1,53 @@
 package com.playstorescrapper.database;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.playstorescrapper.content.Application;
-import com.playstorescrapper.content.Rating;
+import com.playstorescrapper.bean.Application;
+import com.playstorescrapper.bean.Review;
 
 public class AppRatingDAO {
 
-	public void ApplicationDao(Application app) throws SQLException {
-		int applicationId = 0;
+	public void insertApplicationData(Application app) throws SQLException {
 		DatabaseConnection dC = new DatabaseConnection();
 
 		Statement statement = null;
 		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		// statements allow to issue SQL queries to the database
 		statement = dC.getConnection().createStatement();
 
-		resultSet = statement.executeQuery("select id from application");
-
-		if (resultSet.next())
-			applicationId = resultSet.getInt("id") + 1;
-
 		// preparedStatements can use variables and are more efficient
 		preparedStatement = dC.getConnection().prepareStatement(
-				"insert into  application values (?,?, ?, ?, ?, ? , ?, ?)");
+				"insert into "+ app.getName() + " values (?,?, ?, ?, ?, ? )");
 
-		preparedStatement.setInt(1, applicationId);
-		preparedStatement.setString(2, app.getName());
-		preparedStatement.setString(3, app.getPackageId());
-		preparedStatement.setString(4, app.getCategory());
-		preparedStatement.setFloat(5, app.getOverAllRatings().floatValue());
-		preparedStatement.setInt(6, app.getNumberOfDownloads());
-		preparedStatement.setInt(7, app.getNumberOfRaters());
+		preparedStatement.setString(1, app.getName());
+		preparedStatement.setString(2, app.getPackageId());
+		preparedStatement.setString(3, app.getCategory());
+		preparedStatement.setFloat(4, app.getOverAllRatings().floatValue());
+		preparedStatement.setInt(5, app.getNumberOfDownloads());
+		preparedStatement.setInt(6, app.getNumberOfRaters());
 		preparedStatement.executeUpdate();
-
-		preparedStatement.executeQuery();
 
 		// Insert ScreenShot urls;
 		int screenShotId = 0;
-		statement = null;
-		statement = dC.getConnection().createStatement();
 		for (String screenShotUrl : app.getScreenShots()) {
-			String insertSql = "insert into  appScreenShots values ("
-					+ applicationId + "," + screenShotId + "," + screenShotUrl
-					+ ")";
+			String insertSql = "insert into "
+					+ app.getName()
+					+ "_screenshots values ( "
+					+  (screenShotId++)
+					+ " , ' "
+					+ screenShotUrl
+					+ " ' )";
 			statement.addBatch(insertSql);
-			statement.executeBatch();
 		}
+		statement.executeBatch();
+		dC.shutdown();
 
 	}
 
-	private void createTable(String appName) throws SQLException {
-		DatabaseConnection dC = new DatabaseConnection();
-		Connection conn = dC.getConnection();
-		Statement stmt = conn.createStatement();
-		String createSql = "CREATE TABLE  " + appName
-				+ " (reviewId INTEGER not NULL, "
-				+ " ratingStar INTEGER not NULL, "
-				+ " reviewComment VARCHAR(255), " + " reviewer VARCHAR(25), "
-				+ " googlePlusId VARCHAR(30), " + " PRIMARY KEY ( id ))";
-		stmt.executeUpdate(createSql);
-	}
-
-	public void RatingsDao(ArrayList<Rating> ratings, String appId)
+	public void insertReviewData(ArrayList<Review> reviews, String appName)
 			throws SQLException {
 		DatabaseConnection dC = new DatabaseConnection();
 
@@ -80,19 +59,36 @@ public class AppRatingDAO {
 		statement = null;
 		statement = dC.getConnection().createStatement();
 		int ratingId = 0;
-		for (Rating rating : ratings) {
-			String insertSql = "insert into" + appId + " values (" + " "
-					+ ratingId++ + " ," + rating.getRatingStar() + " ,"
-					+ rating.getReviewComment() + " ," + rating.getReviewer()
-					+ " ," + rating.getGooglePlusId() + " )";
+		for (Review review : reviews) {
+			String insertSql = "insert into " 
+					+ appName
+					+ "_reviews"
+					+ " values ( "
+					+ ratingId++
+					+ " , " 
+					+ review.getRating()
+					+ " , ' "
+					+ review.getReviewComment()
+					+ " ' , ' "
+					+ review.getReviewer()
+					+ " ' , ' " 
+					+ review.getGooglePlusId() 
+					+ " ' )";
 			statement.addBatch(insertSql);
-			statement.executeBatch();
 		}
+		statement.executeBatch();
+		dC.shutdown();
 
 	}
 
 	public AppRatingDAO() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public AppRatingDAO(String name) {
+		DatabaseConnection dC = new DatabaseConnection();
+		if(dC.createTables(name));
+			System.out.println("Tables created successfully");
 	}
 
 }

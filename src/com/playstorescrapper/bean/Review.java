@@ -1,18 +1,18 @@
-package com.playstorescrapper.content;
+package com.playstorescrapper.bean;
 
-public class Rating {
+public class Review {
 
-	private int ratingStar;
+	private double rating;
 	private String reviewComment;
 	private String reviewer;
 	private String googlePlusId;
 
-	public int getRatingStar() {
-		return ratingStar;
+	public double getRating() {
+		return rating;
 	}
 
-	public void setRatingStar(int ratingStar) {
-		this.ratingStar = ratingStar;
+	public void setRating(double d) {
+		this.rating = d;
 	}
 
 	public String getReviewComment() {
@@ -39,7 +39,7 @@ public class Rating {
 		this.googlePlusId = googlePlusId;
 	}
 
-	public Rating() {
+	public Review() {
 		// TODO Auto-generated constructor stub
 	}
 
