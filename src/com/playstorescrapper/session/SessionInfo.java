@@ -1,4 +1,4 @@
-package com.playstorescrapper.webcontent;
+package com.playstorescrapper.session;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
