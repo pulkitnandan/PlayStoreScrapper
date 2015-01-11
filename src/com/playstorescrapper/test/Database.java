@@ -21,7 +21,8 @@ public class Database {
 		Application testApp = new Application();
 		testApp.setCategory("testCategory");
 		testApp.setDescription("Lorem Ipsum Vodum Codum Ndem");
-		testApp.setName("appNames21");
+		System.out.println();
+		testApp.setName("cdkh.cwejh.cd".replace('.', '_').substring(4, 13));
 		testApp.setNumberOfDownloads("56628");
 		testApp.setNumberOfRaters("87,866");
 		testApp.setOverAllRatings(5.4);

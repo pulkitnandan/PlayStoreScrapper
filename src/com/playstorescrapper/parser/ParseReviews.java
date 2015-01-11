@@ -15,9 +15,6 @@ public class ParseReviews {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ParseReviews(String cookie) {
-	}
-
 	public ArrayList<Review> parseReviews(String reviewList) {
 		ArrayList<Review> reviews = new ArrayList<Review>();
 		Document doc = null;
@@ -31,6 +28,7 @@ public class ParseReviews {
 			Review review = new Review();
 
 			review.setReviewer(authorName.text());
+			System.out.println(authorName.html());
 			review.setGooglePlusId(authorName.html().substring(34, 55));
 			review.setReviewComment(getReviewBody(reviewsText.get(i)));
 			review.setRating(getReviewRatings(reviewsRating.get(i++)));

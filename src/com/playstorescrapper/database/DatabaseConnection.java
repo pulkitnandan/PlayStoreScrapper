@@ -62,13 +62,18 @@ public class DatabaseConnection {
 			Connection conn = this.getConnection();
 			Statement stmt = null;
 			stmt = conn.createStatement();
+			System.out.println(appName);
 
-			String createSql = "CREATE TABLE  " + appName
-					+ " (name VARCHAR(30), " + " packageId VARCHAR(30), "
-					+ " category VARCHAR(30), " + " description VARCHAR(255), "
+			String createSql = "CREATE TABLE "
+					+ appName
+					+ " ( name VARCHAR2(55), "
+					+ " packageId VARCHAR2(55), "
+					+ " category VARCHAR2(30), " 
+					+ " description VARCHAR2(255), "
 					+ " overAllRatings DECIMAL(2,1), "
-					+ " numberOfDownloads VARCHAR(60), "
-					+ " numberOfRaters VARCHAR(30)" + " )";
+					+ " numberOfDownloads VARCHAR2(60), "
+					+ " numberOfRaters VARCHAR2(30)" 
+					+ " )";
 			stmt.executeUpdate(createSql);
 			createSql = "CREATE TABLE  " + appName + "_screenshots"
 					+ " (screeShotId INTEGER not NULL, "

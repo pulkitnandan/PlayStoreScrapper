@@ -29,6 +29,7 @@ public class PostRequest {
 	public PostRequest(String appId, String cookie) {
 		APP_ID = appId;
 		COOKIE = cookie;
+		System.out.println("\n Loading Post Request");
 	}
 
 	private void setupConnectionDefaults(HttpsURLConnection connection)
@@ -49,8 +50,10 @@ public class PostRequest {
 	}
 
 	public String jsonResponse(int pageNumber) throws Exception {
+		
+		System.out.println("\n Fetching reviews for page " + pageNumber);
 
-		String jsonString = "";
+		String jsonString = null;
 		String referer = "https://play.google.com/store/apps/details?id="
 				+ APP_ID;
 
@@ -82,6 +85,8 @@ public class PostRequest {
 		wr.close();
 
 		responseCode = con.getResponseCode();
+		System.out.println(responseCode);
+		
 		System.out.println("\nSending 'POST' request to URL : " + URL);
 		System.out.println("Post parameters : " + urlParameters);
 		System.out.println("Response Code : " + responseCode);

@@ -9,6 +9,17 @@ import com.playstorescrapper.bean.Application;
 import com.playstorescrapper.bean.Review;
 
 public class AppRatingDAO {
+	
+	private String appName = null;
+	
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
+	}
 
 	public void insertApplicationData(Application app) throws SQLException {
 		DatabaseConnection dC = new DatabaseConnection();
@@ -20,7 +31,7 @@ public class AppRatingDAO {
 
 		// preparedStatements can use variables and are more efficient
 		preparedStatement = dC.getConnection().prepareStatement(
-				"insert into " + app.getName()
+				"insert into " + this.getAppName()
 						+ " values (?,?, ?, ?, ?, ?, ? )");
 
 		preparedStatement.setString(1, app.getName());
@@ -35,7 +46,7 @@ public class AppRatingDAO {
 		// Insert ScreenShot urls;
 		int screenShotId = 0;
 		for (String screenShotUrl : app.getScreenShots()) {
-			String insertSql = "insert into " + app.getName()
+			String insertSql = "insert into " + this.getAppName()
 					+ "_screenshots values ( " + (screenShotId++) + " , ' "
 					+ screenShotUrl + " ' )";
 			statement.addBatch(insertSql);
@@ -76,9 +87,10 @@ public class AppRatingDAO {
 
 	public AppRatingDAO(String name) {
 		DatabaseConnection dC = new DatabaseConnection();
-		if (dC.createTables(name))
-			;
-		System.out.println("Tables created successfully");
+		this.setAppName(name.replace('.', '_').substring(4, 13));
+		if (dC.createTables(this.getAppName()))
+			System.out.println("Tables created successfully");
+		else System.out.println("Failed to create tables");
 	}
 
 }
