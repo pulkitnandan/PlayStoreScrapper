@@ -22,7 +22,7 @@ public class Database {
 		testApp.setCategory("testCategory");
 		testApp.setDescription("Lorem Ipsum Vodum Codum Ndem");
 		System.out.println();
-		testApp.setName("cdkh.cwejh.cd".replace('.', '_').substring(4, 13));
+		testApp.setName("cdk.cwejhdaa.cddaadda");
 		testApp.setNumberOfDownloads("56628");
 		testApp.setNumberOfRaters("87,866");
 		testApp.setOverAllRatings(5.4);

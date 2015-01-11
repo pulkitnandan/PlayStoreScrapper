@@ -17,12 +17,13 @@ public class Request {
 		PostRequest simCity = new PostRequest(appPackageId, cookie);
 
 		try {
-			int pageNumber = 2;
+			int pageNumber = 111;
 			String jsonReviews = simCity.jsonResponse(pageNumber - 1);
 			JsonParser jsonParse = new JsonParser(jsonReviews);
+			System.out.println("\n" + jsonReviews);
 			htmlReviews = jsonParse.parseJsonToHtml();
-			if(htmlReviews.equals("NOT FOUND"))
-			  System.out.println("Nailed It");
+			if (htmlReviews.equals("NOT FOUND"))
+				System.out.println("Nailed It");
 			System.out.println(htmlReviews);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

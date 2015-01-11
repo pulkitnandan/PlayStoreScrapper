@@ -22,7 +22,7 @@ public class ParseHtml {
 		Application application = new Application();
 		Document doc = null;
 		application.setPackageId(appName);
-		
+
 		try {
 			doc = Jsoup.connect(url + appName).get();
 			System.out.println("\n App Page Fetched Succesfully");
@@ -31,40 +31,39 @@ public class ParseHtml {
 			e.printStackTrace();
 			return null;
 		}
-		
+
 		Elements itemProps = doc.select("[itemprop]");
 		Elements score = doc.getElementsByClass("score");
 		Elements starsCount = doc.getElementsByClass("stars-count");
 		Elements numberOfDownload = doc.select("div[itemprop=numDownloads]");
 		Elements description = doc.select("div[itemprop=description]");
-		
-		for(Element item: numberOfDownload){
+
+		for (Element item : numberOfDownload) {
 			application.setNumberOfDownloads(item.text());
 			break;
-		}	
+		}
 
-		
-		for(Element item: score){
+		for (Element item : score) {
 			application.setOverAllRatings(Double.parseDouble(item.text()));
 			break;
-		}	
-		
+		}
+
 		String stars = null;
-		for(Element item: starsCount){
+		for (Element item : starsCount) {
 			stars = item.text();
 			break;
 		}
+		System.out.println(stars);
 		application.setNumberOfRaters(stars.substring(1, stars.length() - 1));
-
 
 		application.setName(itemProps.eq(4).text());
 		application.setCategory(itemProps.eq(8).text());
-		
-		for(Element item: description){
+
+		for (Element item : description) {
 			application.setDescription(item.text());
 			break;
 		}
-		
+
 		Elements screenShots = doc.select("[src]");
 		ArrayList<String> screenShotsUrl = new ArrayList<String>();
 

@@ -3,7 +3,6 @@ package com.playstorescrapper.request;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
@@ -50,7 +49,7 @@ public class PostRequest {
 	}
 
 	public String jsonResponse(int pageNumber) throws Exception {
-		
+
 		System.out.println("\n Fetching reviews for page " + pageNumber);
 
 		String jsonString = null;
@@ -60,11 +59,6 @@ public class PostRequest {
 		URL obj = new URL(URL);
 
 		int responseCode = 200;
-		PrintWriter responseWriter = new PrintWriter("REVIEWS" + APP_ID
-				+ ".JSON");
-		responseWriter.println("");
-
-		// while (responseCode == 200) {
 
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -85,11 +79,13 @@ public class PostRequest {
 		wr.close();
 
 		responseCode = con.getResponseCode();
-		System.out.println(responseCode);
-		
+		if (responseCode != 200) {
+			System.out.println("Error :- Response code : " + responseCode);
+			return "NOT FOUND";
+		}
+		System.out.println("Response Code : " + responseCode);
 		System.out.println("\nSending 'POST' request to URL : " + URL);
 		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
 
 		if (con.getContentEncoding().indexOf("gzip") != -1) {
 			System.out.println("This is gzipped content  ");
@@ -111,7 +107,6 @@ public class PostRequest {
 			wr.close();
 		}
 
-		responseWriter.close();
 		return jsonString;
 
 	}

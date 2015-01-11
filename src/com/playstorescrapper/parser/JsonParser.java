@@ -16,10 +16,11 @@ public class JsonParser {
 		GsonBuilder builder = new GsonBuilder();
 		String object = builder.create().fromJson(reviews, Object.class)
 				.toString();
-		try{
-		reviewCode = object.toString().substring(12, object.length() - 7);
-		}catch (Exception e) {
+		try {
+			reviewCode = object.toString().substring(12, object.length() - 7);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			System.out.println("\nEnd od review Pages");
 			return "NOT FOUND";
 		}
 		System.out.println("\n" + reviewCode);

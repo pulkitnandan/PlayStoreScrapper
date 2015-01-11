@@ -64,25 +64,22 @@ public class DatabaseConnection {
 			stmt = conn.createStatement();
 			System.out.println(appName);
 
-			String createSql = "CREATE TABLE "
-					+ appName
-					+ " ( name VARCHAR2(55), "
-					+ " packageId VARCHAR2(55), "
-					+ " category VARCHAR2(30), " 
-					+ " description VARCHAR2(255), "
+			String createSql = "CREATE TABLE " + appName
+					+ " ( name VARCHAR2(55), " + " packageId VARCHAR2(55), "
+					+ " category VARCHAR2(30), "
+					+ " description VARCHAR2(4000), "
 					+ " overAllRatings DECIMAL(2,1), "
 					+ " numberOfDownloads VARCHAR2(60), "
-					+ " numberOfRaters VARCHAR2(30)" 
-					+ " )";
+					+ " numberOfRaters VARCHAR2(30)" + " )";
 			stmt.executeUpdate(createSql);
 			createSql = "CREATE TABLE  " + appName + "_screenshots"
 					+ " (screeShotId INTEGER not NULL, "
-					+ " screenShotUrl VARCHAR(255)" + " )";
+					+ " screenShotUrl VARCHAR2(4000)" + " )";
 			stmt.executeUpdate(createSql);
 			createSql = "CREATE TABLE  " + appName + "_reviews"
 					+ " (reviewId INTEGER not NULL, " + " ratings INTEGER, "
-					+ " reviewComment VARCHAR(255), "
-					+ " reviewer VARCHAR(25), " + " googlePlusId VARCHAR(30))";
+					+ " reviewComment VARCHAR2(4000), "
+					+ " reviewer VARCHAR2(50), " + " googlePlusId VARCHAR(30))";
 			stmt.executeUpdate(createSql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

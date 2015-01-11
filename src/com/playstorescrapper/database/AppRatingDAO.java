@@ -9,9 +9,9 @@ import com.playstorescrapper.bean.Application;
 import com.playstorescrapper.bean.Review;
 
 public class AppRatingDAO {
-	
+
 	private String appName = null;
-	
+	private Boolean status = false;
 
 	public String getAppName() {
 		return appName;
@@ -59,24 +59,27 @@ public class AppRatingDAO {
 	public void insertReviewData(ArrayList<Review> reviews, String appName)
 			throws SQLException {
 		DatabaseConnection dC = new DatabaseConnection();
-
-		Statement statement = null;
-		// statements allow to issue SQL queries to the database
-		statement = dC.getConnection().createStatement();
-
-		// Insert Ratings urls;
-		statement = null;
-		statement = dC.getConnection().createStatement();
-		int ratingId = 0;
+		PreparedStatement preparedStatement = null;
+		dC.getConnection().setAutoCommit(false);
+		preparedStatement = dC.getConnection().prepareStatement(
+				"insert into " + this.getAppName() + "_reviews"
+						+ " values (?,?, ?, ?, ?)");
+		int reviewId = 0;
 		for (Review review : reviews) {
-			String insertSql = "insert into " + appName + "_reviews"
-					+ " values ( " + ratingId++ + " , " + review.getRating()
-					+ " , ' " + review.getReviewComment() + " ' , ' "
-					+ review.getReviewer() + " ' , ' "
-					+ review.getGooglePlusId() + " ' )";
-			statement.addBatch(insertSql);
+
+			System.out.println("\n\n" + review.getReviewer() + " \n"
+					+ review.getReviewComment() + " \n" + review.getRating()
+					+ "\n " + review.getGooglePlusId());
+
+			preparedStatement.setInt(1, reviewId++);
+			preparedStatement.setDouble(2, review.getRating());
+			preparedStatement.setString(3, review.getReviewComment());
+			preparedStatement.setString(4, review.getReviewer());
+			preparedStatement.setString(5, review.getGooglePlusId());
+			preparedStatement.addBatch();
 		}
-		statement.executeBatch();
+		preparedStatement.executeBatch();
+		dC.getConnection().commit();
 		dC.shutdown();
 
 	}
@@ -88,9 +91,16 @@ public class AppRatingDAO {
 	public AppRatingDAO(String name) {
 		DatabaseConnection dC = new DatabaseConnection();
 		this.setAppName(name.replace('.', '_').substring(4, 13));
-		if (dC.createTables(this.getAppName()))
+		if (dC.createTables(this.getAppName())) {
 			System.out.println("Tables created successfully");
-		else System.out.println("Failed to create tables");
+			status = true;
+		} else
+			System.out.println("Failed to create tables");
+	}
+
+	public Boolean getStatus() {
+		// TODO Auto-generated method stub
+		return status;
 	}
 
 }

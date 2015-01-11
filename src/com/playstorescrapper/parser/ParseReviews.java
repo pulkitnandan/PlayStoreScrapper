@@ -28,8 +28,11 @@ public class ParseReviews {
 			Review review = new Review();
 
 			review.setReviewer(authorName.text());
-			System.out.println(authorName.html());
-			review.setGooglePlusId(authorName.html().substring(34, 55));
+			System.out.println(authorName.html() + "\n");
+			if (authorName.html().equals("A Google User"))
+				review.setGooglePlusId("ID Doesnot EXISTS");
+			else
+				review.setGooglePlusId(authorName.html().substring(34, 55));
 			review.setReviewComment(getReviewBody(reviewsText.get(i)));
 			review.setRating(getReviewRatings(reviewsRating.get(i++)));
 
