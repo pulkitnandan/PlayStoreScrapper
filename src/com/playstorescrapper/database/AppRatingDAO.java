@@ -12,6 +12,7 @@ public class AppRatingDAO {
 
 	private String appName = null;
 	private Boolean status = false;
+	public static int reviewId = 0;
 
 	public String getAppName() {
 		return appName;
@@ -63,7 +64,6 @@ public class AppRatingDAO {
 		preparedStatement = dC.getConnection().prepareStatement(
 				"insert into " + this.getAppName() + "_reviews"
 						+ " values (?,?, ?, ?, ?)");
-		int reviewId = 0;
 		for (Review review : reviews) {
 
 			System.out.println("\n\n" + review.getReviewer() + " \n"
