@@ -23,20 +23,38 @@ public class ParseReviews {
 		Elements reviewsText = doc.getElementsByClass("review-body");
 		Elements reviewsRating = doc.getElementsByClass("tiny-star");
 
-		int i = 0;
-		for (Element authorName : authorNames) {
+		int k = 0;
+		System.out.println(reviewsText.size());
+		for (int i = 0; i < authorNames.size() ; i++) {
+			 Element authorName  =  authorNames.get(i);
 			Review review = new Review();
 
 			review.setReviewer(authorName.text());
-			System.out.println(authorName.html() + "\n");
-			if (authorName.html().equals("A Google User"))
-				review.setGooglePlusId("ID Doesnot EXISTS");
-			else
-				review.setGooglePlusId(authorName.html().substring(34, 55));
-			review.setReviewComment(getReviewBody(reviewsText.get(i)));
-			review.setRating(getReviewRatings(reviewsRating.get(i++)));
+			int authorHtmlLength = authorName.html().length();
+			int authorNameLength = authorName.text().length();
+			
+			review.setReviewComment(getReviewBody(reviewsText.get(k)));
+			review.setRating(getReviewRatings(reviewsRating.get(k)));
 
-			reviews.add(review);
+			if (authorName.text().length() == 13 && authorName.text().equals("A Google User")){
+				review.setReviewer("A Google User");
+				review.setGooglePlusId("ID Doesnot EXISTS1");
+				k++;
+				System.out.println("app name");
+			} else if(authorName.text().length() == 0)
+			{
+					continue;
+			}
+			else{
+				review.setGooglePlusId(authorName.html().substring(34, authorHtmlLength - authorNameLength - 6));
+				k++;
+			}
+		
+				System.out.println("\n" + review.getReviewer() + " "
+						+ review.getReviewComment() + " " + review.getRating()
+						+ " " + review.getGooglePlusId());
+
+				reviews.add(review);
 		}
 
 		return reviews;

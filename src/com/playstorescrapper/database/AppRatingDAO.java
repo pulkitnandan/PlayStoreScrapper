@@ -60,7 +60,6 @@ public class AppRatingDAO {
 			throws SQLException {
 		DatabaseConnection dC = new DatabaseConnection();
 		PreparedStatement preparedStatement = null;
-		dC.getConnection().setAutoCommit(false);
 		preparedStatement = dC.getConnection().prepareStatement(
 				"insert into " + this.getAppName() + "_reviews"
 						+ " values (?,?, ?, ?, ?)");
@@ -79,7 +78,6 @@ public class AppRatingDAO {
 			preparedStatement.addBatch();
 		}
 		preparedStatement.executeBatch();
-		dC.getConnection().commit();
 		dC.shutdown();
 
 	}
