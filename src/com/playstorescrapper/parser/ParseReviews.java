@@ -62,7 +62,7 @@ public class ParseReviews {
 
 	private int getReviewRatings(Element element) {
 		String rating = element.attr("aria-label");
-		return Integer.parseInt(rating.substring(7, 8));
+		return Integer.parseInt(rating.substring(6, 7));
 	}
 
 	private String getReviewBody(Element element) {
